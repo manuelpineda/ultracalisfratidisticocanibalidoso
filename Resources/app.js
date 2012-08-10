@@ -18,15 +18,39 @@ var tab1 = Titanium.UI.createTab({
     window:win1
 });
 
-var label1 = Titanium.UI.createLabel({
-	color:'#999',
+var latitude = Titanium.UI.createLabel({
+	color:'RED',
 	text:'I am Window 1',
 	font:{fontSize:20,fontFamily:'Helvetica Neue'},
 	textAlign:'center',
-	width:'auto'
+	width:'auto',
+	top: 50,
+	height: 50
 });
 
-win1.add(label1);
+var longitude = Titanium.UI.createLabel({
+	color:'BLUE',
+	text:'I am Window 1',
+	font:{fontSize:20,fontFamily:'Helvetica Neue'},
+	textAlign:'center',
+	width:'auto',
+	top: 150,
+	height: 50
+});
+
+var altitude = Titanium.UI.createLabel({
+	color:'GREEN',
+	text:'I am Window 1',
+	font:{fontSize:20,fontFamily:'Helvetica Neue'},
+	textAlign:'center',
+	width:'auto',
+	top: 250,
+	height: 50
+});
+
+win1.add(latitude);
+win1.add(longitude);
+win1.add(altitude);
 
 //
 // create controls tab and root window
@@ -50,9 +74,6 @@ var label2 = Titanium.UI.createLabel({
 });
 
 win2.add(label2);
-
-
-
 //
 //  add tabs
 //
@@ -62,3 +83,12 @@ tabGroup.addTab(tab2);
 
 // open tab group
 tabGroup.open();
+mygeo = require('lib/geo');
+setInterval(function(){
+	mygeo.get(function(e){
+		latitude.text = e.latidude;
+		longitude.text = e.longitude;
+		altitude.text = e.altitude;
+		label2.text = JSON.stringify(e);
+	});
+}, 5000);
